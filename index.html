@@ -3,15 +3,317 @@
   <head>
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
     <link href="./styles.css" rel="stylesheet">
-    <title>Hello World!</title>
+    <title id="title">Assigner</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    <div style="display: flex; flex-direction: row;">
+      <img src="icons/assigner.svg" style="margin-right: .5rem; width: 2rem;" />
+      <h1 id="header">Assigner Project</h1>
+    </div>
+    <div class="parent-container">
+      <div class="button-list">
+        <div class="button-wrapper">
+          <button id="buttonInit" class="cmdBtn">
+            <!-- <img src="icons/init.svg"/> -->
+            <object type="image/svg+xml" data="icons/init.svg" class="icon"></object>
+            ReInit
+          </button>
+        </div>
+        <div class="button-wrapper">
+          <button id="buttonNew" class="cmdBtn">
+            <img src="icons/plus.svg"/>
+            New
+          </button>
+        </div>
+        <div class="button-wrapper">
+          <button id="buttonAssign" class="cmdBtn" disabled>
+            <img src="icons/gitlab-full.svg" />
+            Assign
+          </button>
+        </div>
+        <div class="button-wrapper">
+          <button id="buttonOpen" class="cmdBtn" disabled>
+            <img src="icons/open.svg" />
+            Open
+          </button>
+        </div>
+        <div class="button-wrapper">
+          <button id="buttonGet" class="cmdBtn" disabled>
+            <img src="icons/get.svg" />
+            Get
+          </button>
+        </div>
+        <div class="button-wrapper">
+          <button id="buttonCommit" class="cmdBtn" disabled>
+            <img src="icons/commit.svg" />
+            Commit
+          </button>
+        </div>
+        <div class="button-wrapper">
+          <button id="buttonPush" class="cmdBtn" disabled>
+            <img src="icons/push.svg" />
+            Push
+          </button>
+        </div>
+        <div class="button-wrapper">
+          <button id="buttonLock" class="cmdBtn" disabled>
+            <img src="icons/lock.svg" />
+            Lock
+          </button>
+        </div>
+        <div class="button-wrapper">
+          <button id="buttonUnlock" class="cmdBtn" disabled>
+            <img src="icons/unlock.svg" />
+            Unlock
+          </button>
+        </div>
+        <div class="button-wrapper">
+          <button id="buttonGrade" class="cmdBtn" disabled>
+            <img src="icons/grade.svg" />
+            Grade
+          </button>
+        </div>
+      </div>
+      <div class="content-container">
+        <span id="display_select">No Assignment Selected</span>
+        <select id="assignment_select" name="assignments" class="select-list">
+        </select>
+        <span style="margin-top: 1rem;">Output:</span>
+        <div id="output_div" class="output-box"></div>
+      </div>
+    </div>
+    
+    <!--"Init" Modal-->
+    <div id="modalInit" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span>Create New config.yml</span>
+          <img id="closeInit" src="icons/close_black.svg" class="close" />
+        </div>
+        <span id="warnInit" class="warning">Please Fill In All Fields.</span>
+
+        <span>Gitlab host to use:</span>
+        <input id="init_gitlab" />
+
+        <span style="margin-top: .25rem;">Gitlab Access Token:</span>
+        <input id="init_accessToken" />
+
+        <span style="margin-top: .25rem;">Year and Semester:</span>
+        <input id="init_year" />
+
+        <span style="margin-top: .25rem;">Gitlab Group to Create Assignments Under:</span>
+        <input id="init_group" />
+
+        <span style="margin-top: .25rem;">Canvas Info:</span>
+        <input id="init_info" />
+
+        <div class="modal-buttons">
+          <button id="submitInit">
+            <img src="icons/agree.svg" />
+            Yes, Create
+          </button>
+          <button id="cancelInit">
+            <img src="icons/close.svg" />
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--"New" Modal-->
+    <div id="modalNew" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span>Create New Assignment</span>
+          <img id="closeNew" src="icons/close_black.svg" class="close" />
+        </div>
+        <div>
+          <span id="warnNew" class="warning">Please Fill in an Assignment Name.</span>
+          <span>Assignment Name</span>
+          <input id="new_name">
+        </div>
+        <div class="modal-buttons">
+          <button id="submitNew">
+            <img src="icons/agree.svg" />
+            Create
+          </button>
+          <button id="cancelNew">
+            <img src="icons/close.svg" />
+            Cancel
+          </button>
+        </div>
+        
+      </div>
+    </div>
+
+    <!--"Assign" Modal-->
+    <div id="modalAssign" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="headerAssign">Are you sure?</span>
+          <img id="closeAssign" src="icons/close_black.svg" class="close" />
+        </div>
+        <div class="modal-buttons">
+          <button id="submitAssign">
+            <img src="icons/agree.svg" />
+            Yes, Assign
+          </button>
+          <button id="cancelAssign">
+            <img src="icons/close.svg" />
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--"Open" Modal-->
+    <div id="modalOpen" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="headerOpen">Are you sure?</span>
+          <img id="closeOpen" src="icons/close_black.svg" class="close" />
+        </div>
+        <div class="modal-buttons">
+          <button id="submitOpen">
+            <img src="icons/agree.svg" />
+            Yes, Open
+          </button>
+          <button id="cancelOpen">
+            <img src="icons/close.svg" />
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--"Get" Modal-->
+    <div id="modalGet" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="headerGet">Are you sure?</span>
+          <img id="closeGet" src="icons/close_black.svg" class="close" />
+        </div>
+        <span>Path (optional):</span>
+        <input id="pathGet">
+        <div class="modal-buttons">
+          <button id="submitGet">
+            <img src="icons/agree.svg" />
+            Yes, Get
+          </button>
+          <button id="cancelGet">
+            <img src="icons/close.svg" />
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--"Commit" Modal-->
+    <div id="modalCommit" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="headerCommit">Are you sure?</span>
+          <img id="closeCommit" src="icons/close_black.svg" class="close" />
+        </div>
+        <span id="warnCommit" class="warning">Please Fill in a Commit Message.</span>
+        <span>Commit Comment:</span>
+        <input id="commentCommit">
+        <div class="modal-buttons">
+          <button id="submitCommit">
+            <img src="icons/agree.svg" />
+            Yes, commit
+          </button>
+          <button id="cancelCommit">
+            <img src="icons/close.svg" />
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--"Push" Modal-->
+    <div id="modalPush" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="headerPush">Are you sure?</span>
+          <img id="closePush" src="icons/close_black.svg" class="close" />
+        </div>
+        <span>Path (optional):</span>
+        <input id="pathPush">
+        <div class="modal-buttons">
+          <button id="submitPush">
+            <img src="icons/agree.svg" />
+            Yes, Push
+          </button>
+          <button id="cancelPush">
+            <img src="icons/close.svg" />
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--"Lock" Modal-->
+    <div id="modalLock" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="headerLock">Are you sure?</span>
+          <img id="closeLock" src="icons/close_black.svg" class="close" />
+        </div>
+        <div class="modal-buttons">
+          <button id="submitLock">
+            <img src="icons/agree.svg" />
+            Yes, Lock
+          </button>
+          <button id="cancelLock">
+            <img src="icons/close.svg" />
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--"Unlock" Modal-->
+    <div id="modalUnlock" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="headerUnlock">Are you sure?</span>
+          <img id="closeUnlock" src="icons/close_black.svg" class="close" />
+        </div>
+        <div class="modal-buttons">
+          <button id="submitUnlock">
+            <img src="icons/agree.svg" />
+            Yes, unlock
+          </button>
+          <button id="cancelUnlock">
+            <img src="icons/close.svg" />
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--"Grade" Modal-->
+    <div id="modalGrade" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="headerGrade">Are you sure?</span>
+          <img id="closeGrade" src="icons/close_black.svg" class="close" />
+        </div>
+        <div class="modal-buttons">
+          <button id="submitGrade">
+            <img src="icons/agree.svg" />
+            Yes, Grade Assignment
+          </button>
+          <button id="cancelGrade">
+            <img src="icons/close.svg" />
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>

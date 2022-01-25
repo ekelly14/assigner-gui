@@ -1,0 +1,10 @@
+backend:
+  host: https://git-classes.mst.edu
+  name: gitlab
+  token: ML9W-sxR7qPoGewtYUYL
+canvas-host: umsystem.instructure.com
+canvas-token: 16765~sQ3xnYWMcXRXKNZsOmTcwAdLBaAC5dtotmby7H7CxtaQuL66eipY37nqTg8mOKr9
+namespace: 2021-FS-CS3000
+roster: []
+semester: 2021-FS
+version: 3

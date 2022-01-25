@@ -1,3 +1,174 @@
 /* styles.css */
 
-/* Add styles here to customize the appearance of your app */
+/* Using Iconset: https://iconoir.com/ */
+:root {
+    --main: rgb(4, 42, 124);
+    --secondary: rgb(48, 90, 180);
+    --disabled-main: rgba(71, 71, 71, 0.4);
+    --disabled-secondary: rgba(43, 43, 43, 0.4);
+}
+
+input {
+    font-size: large;
+}
+
+.parent-container {
+    display: flex;
+    flex-direction: row;
+}
+.content-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: x-large;
+}
+
+.button-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-right: 1rem;
+    max-width: 15rem;
+}
+
+.button-wrapper {
+    flex: 1 0 50%;
+    width: 8rem;
+}
+
+.button-wrapper > button {
+    flex-direction: column;
+    border: 2px solid var(--main);
+    background-color: var(--secondary);
+    color: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.18);
+    font-family: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
+    width: 7rem;
+    height: 5rem;
+    border-radius: 10px;
+    margin-bottom: .5rem;
+    /* top right bottom left */
+    padding: 0.25rem 0.75rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.button-wrapper > button:disabled {
+    background-color: var(--disabled-main);
+    border: 2px solid var(--disabled-secondary);
+    color: rgba(41, 40, 40, 0.4);
+}
+
+.button-wrapper > button:hover {
+    background-color: var(--main);
+}
+
+.button-wrapper > button:disabled:hover {
+    cursor: default;
+    background-color: rgba(71, 71, 71, 0.4);
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-bottom: .45rem;
+    color: white;
+    stroke: white;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 20rem;
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.modal-buttons > button {
+    display: inline-flex;
+    flex-direction: row;
+    border: 2px solid var(--main);
+    background-color: var(--secondary);
+    color: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.18);
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.25rem;
+}
+
+.modal-buttons > button:hover {
+    background-color: var(--main);
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.warning {
+    display: none;
+    color: red;
+}
+
+.select-list {
+    margin-top: .5rem;
+    width: 100%;
+    -webkit-appearance: menulist-button;
+    height: 10rem;
+    font-size: large;
+}
+
+.output-box {
+    border: 1px solid; 
+    max-height: 12rem;
+    height: 100%;
+    overflow: auto;
+    margin-top: .5rem;
+}
